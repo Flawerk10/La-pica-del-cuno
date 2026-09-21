@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>Comida Rapida Personalizado</title>
+    <title>La pica del cuno Restaurant</title>
 
 
     <link rel="stylesheet" href="style.css">
@@ -16,7 +16,7 @@
 
 
     <header>
-        <h1>🍔 Comida a domicilio</h1>
+        <h1>🍔 La pica del cuno Restaurant</h1>
         <p>¡Comida a tu gusto!</p>
     </header>
 
@@ -56,3 +56,109 @@
         </section>
 
 
+
+
+        <!-- ZONA DE PERSONALIZACIÓN -->
+        <section id="personalizacion" class="oculto">
+
+
+            <h2 id="nombreProducto"></h2>
+
+
+            <div class="contenedor">
+
+
+                <!-- INGREDIENTE ACTUAL -->
+                <div class="ingrediente">
+
+
+                    <h3>¿Quieres agregar este ingrediente?</h3>
+
+
+                    <div id="ingredienteActual">
+                        Ingrediente
+                    </div>
+
+
+                    <div class="botones">
+                        <button class="aceptar" onclick="aceptarIngrediente()">
+                            ✓ Agregar
+                        </button>
+
+
+                        <button class="rechazar" onclick="rechazarIngrediente()">
+                            ✕ Rechazar
+                        </button>
+                    </div>
+
+
+                </div>
+
+
+
+
+                <!-- PRODUCTO -->
+                <div class="pedido">
+
+
+                    <h3>Tu pedido</h3>
+
+
+                    <div id="productoVisual">
+                        <div id="emojiProducto">🍔</div>
+                    </div>
+
+
+                    <h4>Ingredientes elegidos:</h4>
+
+
+                    <ul id="listaIngredientes">
+                    </ul>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- RESUMEN FINAL -->
+        <section id="final" class="oculto">
+
+
+            <h2>🎉 ¡Tu pedido está listo!</h2>
+
+
+            <div id="resumen"></div>
+
+
+            <button onclick="volverInicio()">
+                Hacer otro pedido
+            </button>
+
+
+        </section>
+
+
+    </main>
+
+
+
+
+    <footer>
+        <p>Como en acsa a tu casa © 2026</p>
+    </footer>
+
+
+
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
