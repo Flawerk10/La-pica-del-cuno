@@ -2,15 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="img/logo.png">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>La pica del cuno restaurant</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
-  <h1 onclick="show('inicio')">🍔 La pica del cuno restaurant</h1>
+  <h1 onclick="show('inicio')"><img class="logo" src="img/logo.png" alt="" width="64" height="64"> La pica del cuno restaurant</h1>
   <p>¡Comida a tu gusto!</p>
-  <nav><button onclick="show('inicio')">Inicio</button><button onclick="show('platos')">Platos hechos</button><button onclick="show('elegir')">Ármalo tú</button><button onclick="show('contacto')">Contacto</button></nav>
+  <nav><button onclick="show('inicio')">Inicio</button><button onclick="show('platos')">Platos hechos</button><button onclick="show('elegir')">Ármalo tú</button><button class="carro" id="navCarro" onclick="show('carrito')">🛒 Carro (0)</button><button onclick="show('contacto')">Contacto</button></nav>
 </header>
 
 <main>
@@ -61,9 +62,32 @@
   </section>
 
   <section id="final" class="centro" hidden>
-    <h2>🎉 ¡Tu pedido está listo!</h2>
+    <h2>🍽️ ¡Tu plato está listo!</h2>
     <div id="resumen"></div>
-    <button class="final-btn" onclick="show('inicio')">Hacer otro pedido</button>
+    <div class="acciones centrado">
+      <button class="final-btn verde" id="btnAgregar" onclick="agregarPersonalizado()">🛒 Agregar al carro</button>
+      <button class="final-btn sec" onclick="show('elegir')">Armar otro</button>
+    </div>
+  </section>
+
+  <section id="carrito" hidden>
+    <h2>🛒 Tu carro</h2>
+    <div id="items"></div>
+    <p class="vacio" id="carroVacio">Tu carro está vacío. Agrega platos desde la carta o ármalo tú.</p>
+    <div id="pieCarro">
+      <div class="total" id="total"></div>
+      <div class="acciones">
+        <button class="final-btn sec" onclick="show('platos')">Seguir pidiendo</button>
+        <button class="final-btn sec" onclick="vaciar()">Vaciar carro</button>
+        <button class="final-btn verde" onclick="confirmar()">Confirmar pedido</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="confirmado" class="centro" hidden>
+    <h2>🎉 ¡Pedido confirmado!</h2>
+    <div id="ticket"></div>
+    <button class="final-btn" onclick="show('inicio')">Volver al inicio</button>
   </section>
 
   <section id="contacto" hidden>
@@ -80,6 +104,7 @@
 </main>
 <footer>La pica del cuno restaurant © 2026</footer>
 
+<div class="toast" id="toast" role="status"></div>
 <script src="script.js"></script>
 </body>
 </html>
