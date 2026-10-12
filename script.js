@@ -2,18 +2,19 @@ const D = {
   Hamburguesa:{e:"🍔",i:["Pan de hamburguesa","Carne de vacuno","Doble carne","Queso cheddar","Queso suizo","Queso azul","Camarones apanados","Tocino","Jamón","Jamón serrano","Lechuga","Rúcula","Tomate","Cebolla","Cebolla caramelizada","Aros de cebolla","Pepinillos","Palta","Champiñones","Pimentón","Huevo","Ají jalapeño","Salsa BBQ","Mayonesa","Ketchup","Mostaza","Guacamole","Salsa de ajo","Salsa picante"]},
   Pizza:{e:"🍕",i:["Salsa de tomate","Queso mozzarella","Queso azul","Pepperoni","Jamón serrano","Jamón","Tocino","Chorizo","Carne molida","Pollo","Carne","Salame","Anchoas","Salmón ahumado","Champiñones","Aceitunas","Cebolla","Pimentón","Tomate","Tomate cherry","Choclo","Piña","Jalapeño","Palmitos","Albahaca","Orégano","Salsa pesto","Extra queso"]},
   Handroll:{e:"🍣",i:["Arroz","Alga nori","Pollo","Camarón","Salmón","Queso crema","Palta","Pepino","Cebollín","Sésamo"]},
-  Shawarma:{e:"🌯",i:["Pan pita","Pollo","Carne de vacuno","Carne de cordero","Lechuga","Queso cheddar","Tomate","Pepino","Cebolla","Cebolla morada","Palta","Papas fritas","Queso","Aceitunas","Choclo","Guacamole","Hummus","Salsa de ajo","Salsa de yogur","Salsa tahini","Salsa picante","Cilantro","Perejil"]}
+  Shawarma:{e:"🌯",i:["Pan pita","Pollo","Carne de vacuno","Carne de cordero","Lechuga","Queso cheddar","Tomate","Pepino","Cebolla","Cebolla morada","Palta","Papas fritas","Queso","Aceitunas","Choclo","Guacamole","Hummus","Salsa de ajo","Salsa de yogur","Salsa tahini","Salsa picante","Cilantro","Perejil"]},
+  Taco:{e:"🌮",i:["Tortilla de maíz","Tortilla de harina","Pollo","Carne de vacuno","Carne al pastor","Camarón","Lechuga","Tomate","Cebolla","Cilantro","Palta","Guacamole","Pico de gallo","Choclo","Frijoles","Queso cheddar","Queso","Ají jalapeño","Salsa picante","Crema agria","Limón"]}
 };
 let prod = "", dec = [];
 const $ = id => document.getElementById(id);
 
 function tipo(n){
-  if (/^pan\b|arroz|nori/i.test(n)) return "pan";
+  if (/^pan\b|arroz|nori|tortilla/i.test(n)) return "pan";
   if (/carne|pollo|pepperoni|chorizo|salame|vacuno|cordero|camar|salm|anchoa/i.test(n)) return "carne";
   if (/queso/i.test(n)) return "queso";
   if (/tocino|jam/i.test(n)) return "tocino";
-  if (/salsa|mayo|ketchup|mostaza|guacamole|hummus|pesto/i.test(n)) return "salsa";
-  if (/lechuga|rúcula|tomate|cebo|pepin|palta|champi|pimen|jalape|ají|aceituna|choclo|piña|palmito|albahaca|cilantro|perejil|orégano/i.test(n)) return "veg";
+  if (/salsa|mayo|ketchup|mostaza|guacamole|hummus|pesto|crema|pico de gallo/i.test(n)) return "salsa";
+  if (/lechuga|rúcula|tomate|cebo|pepin|palta|champi|pimen|jalape|ají|aceituna|choclo|piña|palmito|albahaca|cilantro|perejil|orégano|limón|frijol/i.test(n)) return "veg";
   return "otro";
 }
 function show(id){
@@ -35,7 +36,10 @@ const M = [
   {c:"Handroll",n:"Pollo palta",p:4500,d:["Arroz","Alga nori","Pollo","Palta","Cebollín"]},
   {c:"Shawarma",n:"De pollo",p:4900,d:["Pan pita","Pollo","Lechuga","Tomate","Salsa de ajo"]},
   {c:"Shawarma",n:"De vacuno",p:5500,d:["Pan pita","Carne de vacuno","Cebolla morada","Pepino","Salsa tahini"]},
-  {c:"Shawarma",n:"Mixto",p:6500,d:["Pan pita","Pollo","Carne de vacuno","Lechuga","Papas fritas","Salsa de yogur"]}
+  {c:"Shawarma",n:"Mixto",p:6500,d:["Pan pita","Pollo","Carne de vacuno","Lechuga","Papas fritas","Salsa de yogur"]},
+  {c:"Taco",n:"De pollo",p:4500,d:["Tortilla de maíz","Pollo","Lechuga","Tomate","Crema agria"]},
+  {c:"Taco",n:"De vacuno",p:4900,d:["Tortilla de maíz","Carne de vacuno","Cebolla","Cilantro","Salsa picante"]},
+  {c:"Taco",n:"De camarón",p:5500,d:["Tortilla de harina","Camarón","Palta","Pico de gallo","Limón"]}
 ];
 const precio = v => "$" + v.toLocaleString("es-CL");
 $("carta").innerHTML = Object.keys(D).map(c =>
