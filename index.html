@@ -1,164 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>La pica del cuno Restaurant</title>
-
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La pica del cuno restaurant</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
-
-
-    <header>
-        <h1>🍔 La pica del cuno Restaurant</h1>
-        <p>¡Comida a tu gusto!</p>
-    </header>
-
-
-    <main>
-
-
-        <!-- SELECCIÓN DEL PRODUCTO -->
-        <section id="inicio">
-            <h2>¿Qué quieres comer?</h2>
-
-
-            <div class="opciones">
-
-
-                <button onclick="elegirProducto('Hamburguesa')">
-                    🍔 Hamburguesa
-                </button>
-
-
-                <button onclick="elegirProducto('Pizza')">
-                    🍕 Pizza
-                </button>
-
-
-                <button onclick="elegirProducto('Handroll')">
-                    🍣 Handroll
-                </button>
-
-
-                <button onclick="elegirProducto('Shawarma')">
-                    🌯 Shawarma
-                </button>
-
-
-            </div>
-        </section>
-
-
-
-
-        <!-- ZONA DE PERSONALIZACIÓN -->
-        <section id="personalizacion" class="oculto">
-
-
-            <h2 id="nombreProducto"></h2>
-
-
-            <div class="contenedor">
-
-
-                <!-- INGREDIENTE ACTUAL -->
-                <div class="ingrediente">
-
-
-                    <h3>¿Quieres agregar este ingrediente?</h3>
-
-
-                    <div id="ingredienteActual">
-                        Ingrediente
-                    </div>
-
-
-                    <div class="botones">
-                        <button class="aceptar" onclick="aceptarIngrediente()">
-                            ✓ Agregar
-                        </button>
-
-
-                        <button class="rechazar" onclick="rechazarIngrediente()">
-                            ✕ Rechazar
-                        </button>
-                    </div>
-
-
-                </div>
-
-
-
-
-                <!-- PRODUCTO -->
-                <div class="pedido">
-
-
-                    <h3>Tu pedido</h3>
-
-
-                    <div id="productoVisual">
-                        <div id="emojiProducto">🍔</div>
-                    </div>
-
-
-                    <h4>Ingredientes elegidos:</h4>
-
-
-                    <ul id="listaIngredientes">
-                    </ul>
-
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-
-
-        <!-- RESUMEN FINAL -->
-        <section id="final" class="oculto">
-
-
-            <h2>🎉 ¡Tu pedido está listo!</h2>
-
-
-            <div id="resumen"></div>
-
-
-            <button onclick="volverInicio()">
-                Hacer otro pedido
-            </button>
-
-
-        </section>
-
-
-    </main>
-
-
-
-
-    <footer>
-        <p>Como en acsa a tu casa © 2026</p>
-    </footer>
-
-
-
-
-    <script src="script.js"></script>
-
-
+<header>
+  <h1 onclick="show('inicio')">🍔 La pica del cuno restaurant</h1>
+  <p>¡Comida a tu gusto!</p>
+  <nav><button onclick="show('inicio')">Inicio</button><button onclick="show('platos')">Platos hechos</button><button onclick="show('elegir')">Ármalo tú</button><button onclick="show('contacto')">Contacto</button></nav>
+</header>
+
+<main>
+  <section id="inicio" class="centro">
+    <svg class="hero" viewBox="0 0 700 220" role="img" aria-label="Hamburguesa de La pica del cuno restaurant">
+      <rect width="700" height="220" rx="12" style="fill:var(--peach)"/>
+      <text x="30" y="100" font-family="Arial,sans-serif" font-size="38" font-weight="bold" fill="#ff5722">La pica del cuno</text>
+      <text x="30" y="134" font-family="Arial,sans-serif" font-size="24" style="fill:var(--ink)">restaurant</text>
+      <text x="30" y="170" font-family="Arial,sans-serif" font-size="16" style="fill:var(--muted)">¡Comida a tu gusto!</text>
+      <path d="M430 112 Q430 46 520 46 Q610 46 610 112 Z" fill="#e0a458"/>
+      <ellipse cx="490" cy="76" rx="7" ry="3.5" fill="#fff3e0"/><ellipse cx="525" cy="68" rx="7" ry="3.5" fill="#fff3e0"/><ellipse cx="558" cy="80" rx="7" ry="3.5" fill="#fff3e0"/>
+      <path d="M430 110 q11 14 22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 v6 h-176 z" fill="#81c784"/>
+      <rect x="432" y="116" width="176" height="10" fill="#ffd54f"/>
+      <rect x="430" y="126" width="180" height="22" rx="11" fill="#5d4037"/>
+      <path d="M432 150 H608 Q608 178 580 178 H460 Q432 178 432 150 Z" fill="#d99a4e"/>
+    </svg>
+    <h2>¿Qué quieres hacer?</h2>
+    <div class="opciones"><button class="grande" onclick="show('platos')">🍽️ Platos hechos</button><button class="grande" onclick="show('elegir')">👨‍🍳 Ármalo tú</button></div>
+    
+    
+    
+    
+  </section>
+
+  <section id="elegir" class="centro" hidden>
+    <h2>👨‍🍳 Ármalo tú</h2>
+    <p>Elige qué quieres comer y decide ingrediente por ingrediente.</p>
+    <div class="opciones" id="menu"></div>
+  </section>
+
+  <section id="platos" hidden>
+    <h2>🍽️ Platos hechos</h2>
+    <p>Nuestros clásicos. Toca "Pedir" y listo.</p>
+    <div id="carta"></div>
+  </section>
+
+  <section id="armar" hidden>
+    <h2 id="titulo" class="centro"></h2>
+    <div class="contenedor">
+      <div class="ingrediente">
+        <p class="contador" id="cont"></p>
+        <div class="barra"><i id="barra"></i></div>
+        <h3>¿Quieres agregar este ingrediente?</h3>
+        <div id="actual"></div>
+        <div class="botones">
+          <button class="aceptar" onclick="decidir(true)">✓ Agregar</button>
+          <button class="rechazar" onclick="decidir(false)">✕ Rechazar</button>
+        </div>
+        <button class="atras" id="atras" onclick="atras()">← Volver al anterior</button>
+      </div>
+      <div class="pedido">
+        <h3>Tu pedido</h3>
+        <div id="visual"></div>
+        <h4>Ingredientes elegidos:</h4>
+        <ul id="lista"></ul>
+        <p class="vacio" id="vacio">Aún no agregas ingredientes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="final" class="centro" hidden>
+    <h2>🎉 ¡Tu pedido está listo!</h2>
+    <div id="resumen"></div>
+    <button class="final-btn" onclick="show('inicio')">Hacer otro pedido</button>
+  </section>
+
+  <section id="contacto" hidden>
+    <h2>📞 Contáctanos</h2>
+    <p>¿Tienes alguna duda, sugerencia o problema? Escríbenos con este formulario.</p>
+    <form onsubmit="enviar(event)">
+      <label for="nombre">Nombre:</label><input id="nombre" required>
+      <label for="correo">Correo electrónico:</label><input id="correo" type="email" required>
+      <label for="msg">Mensaje:</label><textarea id="msg" rows="5" required></textarea>
+      <button class="final-btn" type="submit">Enviar mensaje</button>
+    </form>
+    <div class="ok" id="ok" role="status"></div>
+  </section>
+</main>
+<footer>La pica del cuno restaurant © 2026</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
+
