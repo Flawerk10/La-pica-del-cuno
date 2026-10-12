@@ -66,5 +66,25 @@ hr.sep{border:0;border-top:2px dashed var(--box);margin:30px 0}
 .opciones .grande:hover{background:#e64a19}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #1976d2;outline-offset:2px}
 footer{text-align:center;background:var(--foot);color:#fff;padding:15px}
+header h1{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.logo{width:64px;height:64px;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+nav{flex-wrap:wrap}
+nav .carro{background:#333;color:#fff}
+.final-btn.verde{background:var(--green)}.final-btn.verde:hover{background:#388e3c}
+.final-btn.sec{background:var(--box);color:var(--ink)}
+.acciones{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.acciones.centrado{justify-content:center}
+.item{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--box);border-radius:10px;padding:14px;margin-bottom:10px;flex-wrap:wrap}
+.item .info{flex:1;min-width:180px}
+.item small{display:block;color:var(--muted);margin-top:2px}
+.cant{display:flex;align-items:center;gap:10px;font-weight:bold}
+.cant button{width:34px;height:34px;border:0;border-radius:50%;background:var(--orange);color:#fff;font-size:18px;font-weight:bold;cursor:pointer}
+.sub{font-weight:bold;color:var(--orange);min-width:80px;text-align:right}
+.quitar{background:none;border:0;color:var(--red);font:inherit;text-decoration:underline;cursor:pointer}
+.total{font-size:22px;font-weight:bold;text-align:right;margin:16px 0}
+#ticket{background:var(--box);padding:20px;border-radius:10px;margin:20px 0;text-align:left}
+#ticket p{margin:6px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#333;color:#fff;padding:12px 20px;border-radius:24px;font-weight:bold;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+.toast.on{opacity:1}
 @media (max-width:700px){.contenedor{flex-direction:column}.ingrediente,.pedido{width:100%}.botones button{width:100%}#actual{font-size:21px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}

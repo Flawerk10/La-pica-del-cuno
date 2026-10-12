@@ -49,9 +49,7 @@ $("carta").innerHTML = Object.keys(D).map(c =>
   "</div>").join("");
 function pedir(i){
   const m = M[i];
-  $("resumen").innerHTML = "<h3>" + m.n + " (" + m.c + ")</h3>" +
-    m.d.map(x => "<p>✓ " + x + "</p>").join("") + "<p><b>Total: " + precio(m.p) + "</b></p>";
-  show("final");
+  agregar({n: m.n + " (" + m.c + ")", d: m.d, p: m.p});
 }
 function empezar(p){ prod = p; dec = []; show("armar"); pintar(); }
 function decidir(si){
@@ -77,8 +75,12 @@ function pintar(){
 }
 function terminar(){
   const el = elegidos();
-  $("resumen").innerHTML = "<h3>Tu " + prod + "</h3>" +
-    (el.length ? "<p>Ingredientes seleccionados:</p>" + el.map(x => "<p>✓ " + x + "</p>").join("")
+  const p = BASE[prod] + EXTRA * el.length;
+  custom = {n: "Tu " + prod + " personalizado", d: el, p: p};
+  $("btnAgregar").hidden = el.length === 0;
+  $("resumen").innerHTML = "<h3>Tu " + esc(prod) + "</h3>" +
+    (el.length ? "<p>Ingredientes seleccionados:</p>" + el.map(x => "<p>✓ " + esc(x) + "</p>").join("") +
+                 "<p><b>Precio: " + precio(p) + "</b></p>"
                : "<p>No seleccionaste ingredientes.</p>");
   show("final");
 }
@@ -87,3 +89,55 @@ function enviar(e){
   $("ok").textContent = "¡Gracias " + $("nombre").value + "! Tu mensaje fue enviado correctamente.";
   e.target.reset();
 }
+
+// ---------- CARRO ----------
+const BASE = {Hamburguesa:3500, Pizza:6000, Handroll:3000, Shawarma:3500, Taco:3000};
+const EXTRA = 300;
+let carro = [], custom = null, tt;
+try { carro = JSON.parse(localStorage.getItem("carro") || "[]"); } catch (e) { carro = []; }
+if (!Array.isArray(carro)) carro = [];
+carro = carro.filter(x => x && typeof x.n === "string" && Array.isArray(x.d) && Number.isFinite(x.p) && Number.isInteger(x.q) && x.q > 0);
+
+function esc(t){ return String(t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function guardar(){ try { localStorage.setItem("carro", JSON.stringify(carro)); } catch (e) {} }
+function aviso(t){
+  const e = $("toast"); e.textContent = t; e.classList.add("on");
+  clearTimeout(tt); tt = setTimeout(() => e.classList.remove("on"), 1800);
+}
+function agregar(item){
+  const k = item.n + "|" + item.d.join(",");
+  const ex = carro.find(x => x.n + "|" + x.d.join(",") === k);
+  ex ? ex.q++ : carro.push({n: item.n, d: item.d, p: item.p, q: 1});
+  guardar(); pintarCarro(); aviso(item.n + " agregado al carro");
+}
+function agregarPersonalizado(){
+  if (!custom || !custom.d.length) return;
+  agregar(custom); show("carrito");
+}
+function cambiar(i, d){
+  carro[i].q += d;
+  if (carro[i].q <= 0) carro.splice(i, 1);
+  guardar(); pintarCarro();
+}
+function quitar(i){ carro.splice(i, 1); guardar(); pintarCarro(); }
+function vaciar(){ carro = []; guardar(); pintarCarro(); }
+function totalCarro(){ return carro.reduce((a, x) => a + x.p * x.q, 0); }
+function pintarCarro(){
+  const n = carro.reduce((a, x) => a + x.q, 0);
+  $("navCarro").textContent = "🛒 Carro (" + n + ")";
+  $("items").innerHTML = carro.map((x, i) =>
+    `<div class="item"><div class="info"><b>${esc(x.n)}</b><small>${esc(x.d.join(", "))}</small></div>` +
+    `<div class="cant"><button aria-label="Quitar uno" onclick="cambiar(${i},-1)">−</button><span>${x.q}</span><button aria-label="Agregar uno" onclick="cambiar(${i},1)">+</button></div>` +
+    `<div class="sub">${precio(x.p * x.q)}</div><button class="quitar" onclick="quitar(${i})">Quitar</button></div>`).join("");
+  $("carroVacio").hidden = carro.length > 0;
+  $("pieCarro").hidden = carro.length === 0;
+  $("total").textContent = "Total: " + precio(totalCarro());
+}
+function confirmar(){
+  if (!carro.length) return;
+  $("ticket").innerHTML = carro.map(x =>
+    `<p><b>${x.q} × ${esc(x.n)}</b> — ${precio(x.p * x.q)}<br><small>${esc(x.d.join(", "))}</small></p>`).join("") +
+    `<p><b>Total: ${precio(totalCarro())}</b></p>`;
+  vaciar(); show("confirmado");
+}
+pintarCarro();
