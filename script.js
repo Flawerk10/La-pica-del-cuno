@@ -25,21 +25,21 @@ $("menu").innerHTML = Object.keys(D).map(k =>
   `<button onclick="empezar('${k}')">${D[k].e} ${k}</button>`).join("");
 
 const M = [
-  {c:"Hamburguesa",n:"Clásica",p:5900,d:["Pan de hamburguesa","Carne de vacuno","Lechuga","Tomate","Mayonesa"]},
-  {c:"Hamburguesa",n:"Cheeseburger",p:6500,d:["Pan de hamburguesa","Carne de vacuno","Queso cheddar","Pepinillos","Ketchup","Mostaza"]},
-  {c:"Hamburguesa",n:"Doble BBQ",p:7900,d:["Pan de hamburguesa","Doble carne","Tocino","Queso cheddar","Cebolla caramelizada","Salsa BBQ"]},
-  {c:"Pizza",n:"Margarita",p:8900,d:["Salsa de tomate","Queso mozzarella","Albahaca","Orégano"]},
-  {c:"Pizza",n:"Pepperoni",p:9900,d:["Salsa de tomate","Queso mozzarella","Pepperoni"]},
-  {c:"Pizza",n:"Hawaiana",p:9500,d:["Salsa de tomate","Queso mozzarella","Jamón","Piña"]},
-  {c:"Handroll",n:"Salmón queso crema",p:4900,d:["Arroz","Alga nori","Salmón","Queso crema"]},
-  {c:"Handroll",n:"Camarón palta",p:5200,d:["Arroz","Alga nori","Camarón","Palta"]},
-  {c:"Handroll",n:"Pollo palta",p:4500,d:["Arroz","Alga nori","Pollo","Palta","Cebollín"]},
-  {c:"Shawarma",n:"De pollo",p:4900,d:["Pan pita","Pollo","Lechuga","Tomate","Salsa de ajo"]},
-  {c:"Shawarma",n:"De vacuno",p:5500,d:["Pan pita","Carne de vacuno","Cebolla morada","Pepino","Salsa tahini"]},
-  {c:"Shawarma",n:"Mixto",p:6500,d:["Pan pita","Pollo","Carne de vacuno","Lechuga","Papas fritas","Salsa de yogur"]},
-  {c:"Taco",n:"De pollo",p:4500,d:["Tortilla de maíz","Pollo","Lechuga","Tomate","Crema agria"]},
-  {c:"Taco",n:"De vacuno",p:4900,d:["Tortilla de maíz","Carne de vacuno","Cebolla","Cilantro","Salsa picante"]},
-  {c:"Taco",n:"De camarón",p:5500,d:["Tortilla de harina","Camarón","Palta","Pico de gallo","Limón"]}
+  {c:"Hamburguesa",n:"Clásica",p:6900,d:["Pan de hamburguesa","Carne de vacuno","Lechuga","Tomate","Mayonesa"]},
+  {c:"Hamburguesa",n:"Cheeseburger",p:7900,d:["Pan de hamburguesa","Carne de vacuno","Queso cheddar","Pepinillos","Ketchup","Mostaza"]},
+  {c:"Hamburguesa",n:"Doble BBQ",p:9900,d:["Pan de hamburguesa","Doble carne","Tocino","Queso cheddar","Cebolla caramelizada","Salsa BBQ"]},
+  {c:"Pizza",n:"Margarita",p:9500,d:["Salsa de tomate","Queso mozzarella","Albahaca","Orégano"]},
+  {c:"Pizza",n:"Pepperoni",p:11500,d:["Salsa de tomate","Queso mozzarella","Pepperoni"]},
+  {c:"Pizza",n:"Hawaiana",p:11000,d:["Salsa de tomate","Queso mozzarella","Jamón","Piña"]},
+  {c:"Handroll",n:"Salmón queso crema",p:4200,d:["Arroz","Alga nori","Salmón","Queso crema"]},
+  {c:"Handroll",n:"Camarón palta",p:4600,d:["Arroz","Alga nori","Camarón","Palta"]},
+  {c:"Handroll",n:"Pollo palta",p:3800,d:["Arroz","Alga nori","Pollo","Palta","Cebollín"]},
+  {c:"Shawarma",n:"De pollo",p:5900,d:["Pan pita","Pollo","Lechuga","Tomate","Salsa de ajo"]},
+  {c:"Shawarma",n:"De vacuno",p:6500,d:["Pan pita","Carne de vacuno","Cebolla morada","Pepino","Salsa tahini"]},
+  {c:"Shawarma",n:"Mixto",p:7200,d:["Pan pita","Pollo","Carne de vacuno","Lechuga","Papas fritas","Salsa de yogur"]},
+  {c:"Taco",n:"De pollo (3 un.)",p:5900,d:["Tortilla de maíz","Pollo","Lechuga","Tomate","Crema agria"]},
+  {c:"Taco",n:"De vacuno (3 un.)",p:6500,d:["Tortilla de maíz","Carne de vacuno","Cebolla","Cilantro","Salsa picante"]},
+  {c:"Taco",n:"De camarón (3 un.)",p:7200,d:["Tortilla de harina","Camarón","Palta","Pico de gallo","Limón"]}
 ];
 const precio = v => "$" + v.toLocaleString("es-CL");
 $("carta").innerHTML = Object.keys(D).map(c =>
@@ -75,8 +75,8 @@ function pintar(){
 }
 function terminar(){
   const el = elegidos();
-  const p = BASE[prod] + EXTRA * el.length;
-  custom = {n: "Tu " + prod + " personalizado", d: el, p: p};
+  const p = BASE[prod] + el.reduce((a, x) => a + (EXTRA[tipo(x)] || 0), 0);
+  custom = {n: "Tu " + prod + (prod === "Taco" ? " (3 un.)" : "") + " personalizado", d: el, p: p};
   $("btnAgregar").hidden = el.length === 0;
   $("resumen").innerHTML = "<h3>Tu " + esc(prod) + "</h3>" +
     (el.length ? "<p>Ingredientes seleccionados:</p>" + el.map(x => "<p>✓ " + esc(x) + "</p>").join("") +
@@ -91,8 +91,9 @@ function enviar(e){
 }
 
 // ---------- CARRO ----------
-const BASE = {Hamburguesa:3500, Pizza:6000, Handroll:3000, Shawarma:3500, Taco:3000};
-const EXTRA = 300;
+// Precio base de cada producto armado (CLP). Los ingredientes se cobran según su tipo.
+const BASE = {Hamburguesa:4500, Pizza:7500, Handroll:2800, Shawarma:4000, Taco:4000};
+const EXTRA = {pan:0, carne:1500, queso:700, tocino:800, veg:300, salsa:0, otro:400};
 let carro = [], custom = null, tt;
 try { carro = JSON.parse(localStorage.getItem("carro") || "[]"); } catch (e) { carro = []; }
 if (!Array.isArray(carro)) carro = [];
